@@ -1,0 +1,11 @@
+library(datasets)
+library(lubridate)
+filename <- "household_power_consumption.txt"
+Data <- read.table(filename,header = TRUE,na.strings = "?",sep=";")
+Global_Active <- subset(Data,Date == "1/2/2007"| Date == "2/2/2007")
+Glo_time <- paste(Global_Active$Date,Global_Active$Time)
+Day_time <- dmy_hms(Glo_time)
+Global_Active <- cbind(Global_Active,Day_time)
+with(Global_Active,plot(Day_time,Global_active_power,type="l",ylab = "Global Active Power (kilowatts)",xlab=""))
+dev.copy(png,file="plot2.png")
+dev.off()     
